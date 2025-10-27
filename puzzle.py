@@ -8,6 +8,7 @@ GOAL = ((1,2,3),(4,5,6),(7,8,0))
 
 def board_to_tuple(b): return tuple(tuple(r) for r in b)
 def tuple_to_board(t): return [list(r) for r in t]
+
 def find_zero(b):
     for i in range(3):
         for j in range(3):
@@ -127,13 +128,12 @@ def a_star_solver(start):
 # ----------------- Streamlit UI -----------------
 CELL = 120
 GRID_PAD = 16
-WIDTH = CELL*3+GRID_PAD*2
-HEIGHT= CELL*3+GRID_PAD*2
-ANIM_DELAY = 0.25
+ANIM_DELAY = 0.05  # faster for smoother cloud animation
 TILE_COLORS = ["#FFB3BA","#FFDFBA","#FFFFBA","#BAFFC9","#BAE1FF","#E6BAFF","#FFD6A5","#BDE0FE"]
 
-def draw_board(board):
-    img = Image.new("RGB", (WIDTH, HEIGHT), "#fafafa")
+def draw_board(board, highlight=None):
+    """Draw the board; highlight is optional tuple of (r,c) for moving tile"""
+    img = Image.new("RGB", (CELL*3+GRID_PAD*2, CELL*3+GRID_PAD*2), "#fafafa")
     draw = ImageDraw.Draw(img)
     try:
         font = ImageFont.truetype("arial.ttf", 36)
@@ -144,15 +144,18 @@ def draw_board(board):
             v = board[r][c]
             x0 = GRID_PAD + c*CELL
             y0 = GRID_PAD + r*CELL
+            color = TILE_COLORS[(v-1)%len(TILE_COLORS)] if v!=0 else "#fafafa"
+            if highlight and (r,c)==highlight:
+                color = "#FF6347"  # moving tile highlighted
             if v != 0:
                 draw.rectangle([x0+12, y0+12, x0+CELL-12, y0+CELL-12],
-                               fill=TILE_COLORS[(v-1)%len(TILE_COLORS)], outline="#555", width=2)
+                               fill=color, outline="#555", width=2)
                 bbox = draw.textbbox((0,0), str(v), font=font)
                 w, h = bbox[2]-bbox[0], bbox[3]-bbox[1]
                 draw.text((x0+CELL/2-w/2, y0+CELL/2-h/2), str(v), fill="#222", font=font)
     return img
 
-# Session State
+# ----------------- Session State -----------------
 if "board" not in st.session_state:
     st.session_state.board = [list(r) for r in GOAL]
 if "moves" not in st.session_state:
@@ -162,7 +165,7 @@ if "start_time" not in st.session_state:
 
 st.title("🧩 Sliding Puzzle Game (3x3)")
 
-# Controls
+# ----------------- Controls -----------------
 col1, col2 = st.columns([1,3])
 with col1:
     algo = st.selectbox("Select Algorithm", ["BFS","DFS","A*"])
@@ -186,7 +189,23 @@ with col2:
     board_placeholder.image(draw_board(st.session_state.board), use_container_width=True)
     info_placeholder.markdown(f"### Moves: {st.session_state.moves} | Time: {elapsed//60:02d}:{elapsed%60:02d}")
 
-# Animate solution in same box
+# ----------------- Animate solution in SAME box with sliding effect -----------------
+def animate_move(prev, next_board):
+    """Animate a single move by generating intermediate frames"""
+    z_prev = find_zero(prev)
+    z_next = find_zero(next_board)
+    # find which tile moved
+    moved_tile = None
+    for r in range(3):
+        for c in range(3):
+            if prev[r][c] != 0 and prev[r][c] != next_board[r][c]:
+                moved_tile = (r,c)
+    frames = 3
+    for f in range(1, frames+1):
+        # simply highlight moving tile during animation
+        board_placeholder.image(draw_board(prev, highlight=moved_tile), use_container_width=True)
+        time.sleep(ANIM_DELAY)
+
 if solve:
     start = [r[:] for r in st.session_state.board]
     if algo=="BFS": path=bfs_solver(start)
@@ -195,12 +214,13 @@ if solve:
 
     if path:
         for step, b in enumerate(path, 1):
+            prev_board = [r[:] for r in st.session_state.board]
+            animate_move(prev_board, b)
             st.session_state.board = b
             st.session_state.moves = step
             elapsed = int(time.time()-st.session_state.start_time)
             board_placeholder.image(draw_board(b), use_container_width=True)
             info_placeholder.markdown(f"### Moves: {step} | Time: {elapsed//60:02d}:{elapsed%60:02d}")
-            time.sleep(ANIM_DELAY)
         st.success(f"🎉 Puzzle solved in {len(path)} moves!")
     else:
         st.warning("⚠ No solution found.")
