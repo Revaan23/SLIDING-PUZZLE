@@ -128,7 +128,7 @@ def a_star_solver(start):
 # ----------------- Streamlit UI -----------------
 CELL = 120
 GRID_PAD = 16
-ANIM_DELAY = 0.3  # adjust until it feels like local
+ANIM_DELAY = 0.25  # adjust until it feels like local
 TILE_COLORS = ["#FFB3BA","#FFDFBA","#FFFFBA","#BAFFC9","#BAE1FF","#E6BAFF","#FFD6A5","#BDE0FE"]
 
 def draw_board(board, highlight=None):
