@@ -1,178 +1,157 @@
 # 🧩 Sliding Puzzle Solver using AI Search Algorithms
 
-An interactive **3×3 Sliding Puzzle (8-Puzzle)** game built with **Python** and **Streamlit** that demonstrates how different **Artificial Intelligence search algorithms** solve the puzzle.
+An interactive **3×3 Sliding Puzzle (8-Puzzle)** game built with **Python** and **Streamlit** that demonstrates how classic **Artificial Intelligence search algorithms** solve the puzzle efficiently.
 
-The application allows users to shuffle the puzzle, choose a search algorithm, and watch the solution being animated step-by-step.
-
----
-
-## 📖 Overview
-
-The Sliding Puzzle is a classic Artificial Intelligence problem where the objective is to arrange the numbered tiles in the correct order by sliding them into the empty space.
-
-This project demonstrates three fundamental AI search algorithms:
-
-- Breadth First Search (BFS)
-- Depth First Search (DFS)
-- A* Search (A-Star)
-
-The application provides a simple graphical interface where users can:
-
-- Shuffle the puzzle
-- Select a solving algorithm
-- Visualize the solving process
-- Track the number of moves
-- Monitor elapsed solving time
+The application allows users to shuffle the puzzle, choose a search algorithm, and watch the puzzle being solved with smooth animations while tracking the number of moves and elapsed time.
 
 ---
 
-## 🚀 Features
+## 🌐 Live Demo
+
+🚀 **Try the application online**
+
+**https://sliding-puzzle-udrtuvmvvu9beckxtm3j4p.streamlit.app/**
+
+---
+
+# 📖 Overview
+
+The Sliding Puzzle (8-Puzzle) is one of the most popular search problems in Artificial Intelligence.
+
+The objective is to rearrange the numbered tiles into the correct order by sliding them into the empty space.
+
+This project demonstrates how different AI search algorithms explore the puzzle's state space to reach the goal state.
+
+---
+
+# ✨ Features
 
 - 🎮 Interactive 3×3 Sliding Puzzle
-- 🔀 Random puzzle generation
-- 🧠 Multiple AI search algorithms
+- 🔀 Random puzzle shuffling
+- 🧠 Three AI search algorithms
   - Breadth First Search (BFS)
   - Depth First Search (DFS)
-  - A* Search using Manhattan Distance heuristic
-- 🎨 Smooth animated tile movement
-- 📊 Move counter
-- ⏱️ Timer
-- 💻 Clean Streamlit interface
-- 🖼️ Colorful tile visualization using Pillow
+  - A* Search
+- 📊 Move Counter
+- ⏱️ Live Timer
+- 🎨 Animated puzzle solving
+- 🖼️ Colorful tile interface
+- ⚡ Fast Streamlit-based web application
 
 ---
 
-# Algorithms Used
+# 🤖 Algorithms Implemented
 
-## 1. Breadth First Search (BFS)
+## Breadth First Search (BFS)
 
-BFS explores every state level-by-level.
+Breadth First Search explores every possible state level by level.
 
 ### Advantages
 
-- Always finds the shortest solution
+- Guarantees the shortest solution
 - Complete search algorithm
 
 ### Disadvantages
 
 - High memory consumption
-- Slow for complex puzzles
+- Slow for larger search spaces
 
-Time Complexity:
-
-```
-O(b^d)
-```
-
-Space Complexity:
+**Time Complexity**
 
 ```
 O(b^d)
 ```
 
-where
+**Space Complexity**
 
-- b = branching factor
-- d = solution depth
+```
+O(b^d)
+```
 
 ---
 
-## 2. Depth First Search (DFS)
+## Depth First Search (DFS)
 
-DFS explores one path completely before backtracking.
+Depth First Search explores one branch completely before backtracking.
 
 ### Advantages
 
 - Low memory usage
-- Fast for shallow solutions
+- Simple implementation
 
 ### Disadvantages
 
-- Does not always find the shortest solution
-- May get trapped in deep search trees
+- May not find the shortest path
+- Can get trapped in deep branches
 
-Time Complexity
+**Time Complexity**
 
 ```
 O(b^m)
 ```
 
-Space Complexity
+**Space Complexity**
 
 ```
 O(bm)
 ```
 
-where
-
-- b = branching factor
-- m = maximum search depth
-
 ---
 
-## 3. A* Search
+## A* Search Algorithm
 
 A* is an informed search algorithm that combines:
 
-- Cost from start node (g)
-- Heuristic estimate to goal (h)
+- Cost from the start node
+- Estimated cost to the goal
 
-Evaluation Function:
+Evaluation Function
 
 ```
 f(n) = g(n) + h(n)
 ```
 
-This project uses the **Manhattan Distance** heuristic.
+where
 
-Advantages:
+- **g(n)** = Cost from the start node
+- **h(n)** = Manhattan Distance heuristic
+
+### Advantages
 
 - Optimal
 - Complete
-- Much faster than BFS
+- Faster than BFS
 - Explores fewer states
 
-Time Complexity
+---
+
+# 📐 Manhattan Distance Heuristic
+
+The Manhattan Distance measures how far each tile is from its correct position.
+
+Formula
 
 ```
-Depends on heuristic
+|x₁ − x₂| + |y₁ − y₂|
 ```
 
-Space Complexity
-
-```
-Exponential in worst case
-```
+The heuristic value is the total Manhattan distance of all tiles.
 
 ---
 
-# Manhattan Distance Heuristic
-
-The Manhattan Distance calculates how far every tile is from its correct position.
-
-Formula:
-
-```
-|x1 - x2| + |y1 - y2|
-```
-
-The total heuristic value is the sum of all tile distances.
-
----
-
-# Technologies Used
+# 🛠️ Technologies Used
 
 - Python 3
 - Streamlit
 - Pillow (PIL)
 - Queue
 - Priority Queue
-- Random
 - Time
+- Random
 
 ---
 
-# Project Structure
+# 📂 Project Structure
 
 ```
 Sliding-Puzzle/
@@ -180,29 +159,28 @@ Sliding-Puzzle/
 ├── app.py
 ├── requirements.txt
 ├── README.md
+├── .streamlit/
+│   └── config.toml
 └── screenshots/
-    ├── home.png
-    ├── shuffle.png
-    └── solving.png
 ```
 
 ---
 
-# Installation
+# ⚙️ Installation
 
 Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/sliding-puzzle.git
+git clone https://github.com/your-username/sliding-puzzle.git
 ```
 
-Go inside the project
+Navigate to the project folder
 
 ```bash
 cd sliding-puzzle
 ```
 
-Install dependencies
+Install the required packages
 
 ```bash
 pip install -r requirements.txt
@@ -214,146 +192,153 @@ Run the application
 streamlit run app.py
 ```
 
----
-
-# Requirements
+The application will open at
 
 ```
-streamlit
-Pillow
-```
-
-Install manually
-
-```bash
-pip install streamlit pillow
+http://localhost:8501
 ```
 
 ---
 
-# How to Use
+# 📦 Requirements
+
+```
+streamlit==1.50.0
+Pillow==11.2.1
+streamlit-drawable-canvas
+```
+
+---
+
+# 🎮 How to Use
 
 ### Step 1
 
 Launch the application.
 
----
-
 ### Step 2
 
-Click **Shuffle** to generate a randomized puzzle.
-
----
+Click **Shuffle** to generate a random puzzle.
 
 ### Step 3
 
-Choose one of the available algorithms:
+Choose one of the algorithms:
 
 - BFS
 - DFS
 - A*
 
----
-
 ### Step 4
 
 Click **Solve**.
 
----
-
 ### Step 5
 
-Watch the puzzle solve itself with smooth tile animations.
+Watch the puzzle solve itself step-by-step with animation.
 
 ---
 
-# User Interface
-
-The application displays:
-
-- Puzzle board
-- Algorithm selector
-- Shuffle button
-- Solve button
-- Move counter
-- Timer
-- Animated solution
-
----
-
-# Example Goal State
+# 🎯 Goal State
 
 ```
-1 2 3
-4 5 6
-7 8 _
++---+---+---+
+| 1 | 2 | 3 |
++---+---+---+
+| 4 | 5 | 6 |
++---+---+---+
+| 7 | 8 |   |
++---+---+---+
 ```
-
-where **_** represents the empty tile.
 
 ---
 
-# Future Improvements
+# 📊 Project Highlights
 
-- 4×4 (15 Puzzle) support
+✅ Interactive AI Puzzle Solver
+
+✅ Real-time Move Counter
+
+✅ Live Timer
+
+✅ Animated Solution Visualization
+
+✅ Three AI Search Algorithms
+
+✅ Manhattan Distance Heuristic
+
+✅ Streamlit Web Interface
+
+---
+
+# 🚀 Future Enhancements
+
+- 4×4 (15 Puzzle)
 - Greedy Best First Search
 - Uniform Cost Search
 - Iterative Deepening DFS
 - IDA* Algorithm
-- Puzzle solvability checker
-- Manual tile movement
-- Hint system
-- Performance comparison graph
-- Search tree visualization
-- Dark mode UI
-- Difficulty levels
-- Mobile responsive interface
+- Puzzle Solvability Checker
+- Manual Tile Movement
+- Hint System
+- Difficulty Levels
+- Performance Comparison Charts
+- Search Tree Visualization
+- Dark Mode
+- Responsive Mobile Interface
 
 ---
 
-# Learning Outcomes
+# 📚 Learning Outcomes
 
-This project helps understand:
+This project demonstrates practical implementation of:
 
+- Artificial Intelligence
 - State Space Search
-- Artificial Intelligence Search Algorithms
+- Graph Search Algorithms
 - Heuristic Search
-- Graph Traversal
-- Streamlit Application Development
-- Python Data Structures
-- Animation in Streamlit
-- Problem Solving using AI
+- Breadth First Search
+- Depth First Search
+- A* Search
+- Manhattan Distance
+- Streamlit Web Development
+- Python Programming
 
 ---
 
-# Screenshots
+# 📸 Screenshots
 
-Add screenshots inside the **screenshots** folder.
+Add screenshots of your application inside the **screenshots/** folder.
 
 Example:
 
 ```
 screenshots/
-│
 ├── home.png
 ├── shuffle.png
-└── solving.png
+├── solving.png
+└── solved.png
 ```
 
 ---
 
-# Author
+# 👨‍💻 Author
 
 **Revaan J.R.**
 
-B.Tech Artificial Intelligence and Data Science
+**B.Tech – Artificial Intelligence and Data Science**
 
 ---
 
-# License
+# ⭐ Live Application
 
-This project is licensed under the MIT License.
+🔗 **https://sliding-puzzle-udrtuvmvvu9beckxtm3j4p.streamlit.app/**
 
 ---
 
-## ⭐ If you found this project useful, consider giving it a Star on GitHub!
+# 📄 License
+
+This project is licensed under the **MIT License**.
+
+---
+
+## ⭐ If you enjoyed this project, please consider giving it a **Star ⭐** on GitHub!
